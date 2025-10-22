@@ -4,7 +4,6 @@ from django.utils import timezone
 from datetime import timedelta
 import re
 
-
 def validar_rut(value):
     """
     Valida el formato del RUT chileno (sin puntos, con guión).
