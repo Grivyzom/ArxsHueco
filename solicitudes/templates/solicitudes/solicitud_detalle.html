@@ -1,0 +1,91 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h3>Detalle de Solicitud</h3>
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h5>Información Personal</h5>
+          <table class="table table-borderless">
+            <tr>
+              <th>RUT:</th>
+              <td>{{ solicitud.rut }}</td>
+            </tr>
+            <tr>
+              <th>Nombre Completo:</th>
+              <td>{{ solicitud.nombre_completo }}</td>
+            </tr>
+            <tr>
+              <th>Teléfono:</th>
+              <td>{{ solicitud.telefono }}</td>
+            </tr>
+            <tr>
+              <th>Dirección:</th>
+              <td>{{ solicitud.direccion }}</td>
+            </tr>
+            <tr>
+              <th>Comuna:</th>
+              <td>{{ solicitud.comuna }}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="col-md-6">
+          <h5>Estado de la Solicitud</h5>
+          <table class="table table-borderless">
+            <tr>
+              <th>Estado:</th>
+              <td><span class="badge {{ solicitud.get_badge_class }}">{{ solicitud.get_estado_display }}</span></td>
+            </tr>
+            <tr>
+              <th>Fecha de Solicitud:</th>
+              <td>{{ solicitud.fecha_solicitud|date:"d/m/Y H:i" }}</td>
+            </tr>
+            {% if solicitud.fecha_aceptacion %}
+            <tr>
+              <th>Fecha de Aceptación:</th>
+              <td>{{ solicitud.fecha_aceptacion|date:"d/m/Y H:i" }}</td>
+            </tr>
+            {% endif %}
+            {% if solicitud.estado == 'ACEPTADA' %}
+            <tr>
+              <th>Vigencia:</th>
+              <td>
+                {% if solicitud.esta_vigente %}
+                  <span class="badge bg-success">Vigente</span>
+                {% else %}
+                  <span class="badge bg-danger">Expirada</span>
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <th>Días Restantes:</th>
+              <td>
+                {% if solicitud.dias_restantes > 0 %}
+                  <span class="text-success">{{ solicitud.dias_restantes }} días</span>
+                {% else %}
+                  <span class="text-danger">Expirado hace {{ solicitud.dias_restantes|add:"-1"|abs }} días</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endif %}
+            <tr>
+              <th>Última Modificación:</th>
+              <td>{{ solicitud.fecha_modificacion|date:"d/m/Y H:i" }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <a href="{% url 'solicitudes:lista' %}" class="btn btn-secondary">Volver al Listado</a>
+        <a href="{% url 'solicitudes:editar' solicitud.pk %}" class="btn btn-warning">Editar</a>
+        <a href="{% url 'solicitudes:eliminar' solicitud.pk %}" class="btn btn-danger">Eliminar</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
