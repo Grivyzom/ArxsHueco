@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="text-center mt-5">
+  <h1 class="display-5 fw-bold">Sistema Municipal de Gas</h1>
+  <p class="lead text-muted mb-4">
+    Bienvenido al sistema de gestión de solicitudes de gas.
+  </p>
+  <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+    <a href="{% url 'solicitudes:crear' %}" class="btn btn-primary btn-lg">Registrar Solicitud</a>
+    <a href="{% url 'solicitudes:lista' %}" class="btn btn-outline-secondary btn-lg">Ver Solicitudes</a>
+  </div>
+</div>
+{% endblock %}

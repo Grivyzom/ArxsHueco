@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>{% if object %}Editar Solicitud{% else %}Nueva Solicitud{% endif %}</h2>
+  <form method="post" novalidate id="form-solicitud">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{% url 'solicitudes:lista' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+<script src="{% static 'solicitudes/js/validaciones.js' %}"></script>
+{% endblock %}

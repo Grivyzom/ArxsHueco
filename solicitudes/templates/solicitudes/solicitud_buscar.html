@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Búsqueda de Solicitud por RUT</h2>
+  <form method="get" class="row g-3">
+    <div class="col-auto">
+      <input type="text" name="rut" class="form-control" placeholder="Ej: 12345678-9" required>
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
+  </form>
+
+  {% if resultado %}
+  <div class="mt-4 card p-3">
+    <h5>{{ resultado.nombre_completo }}</h5>
+    <p>Comuna: {{ resultado.comuna }}</p>
+    <p>Estado: <span class="badge {{ resultado.get_badge_class }}">{{ resultado.get_estado_display }}</span></p>
+    {% if resultado.estado == 'ACEPTADA' %}
+      <p>Vigente: {{ resultado.esta_vigente|yesno:"Sí,No" }}</p>
+      <p>Días restantes: {{ resultado.dias_restantes }}</p>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

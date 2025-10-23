@@ -1,0 +1,11 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container mt-4 text-center">
+  <h3>¿Seguro que deseas eliminar esta solicitud?</h3>
+  <p><strong>{{ object.nombre_completo }}</strong> ({{ object.rut }})</p>
+  <form method="post">{% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a href="{% url 'solicitudes:lista' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}
