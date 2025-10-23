@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from .models import Solicitud
-from .forms import SolicitudForm
+from .forms import SolicitudForm, SolicitudAdminForm
 
 
 # 🧾 Crear una nueva solicitud (usuario)
@@ -50,14 +50,18 @@ class DetalleSolicitud(DetailView):
 # ✏️ Actualizar solicitud (cambiar estado o editar datos)
 class EditarSolicitud(UpdateView):
     model = Solicitud
-    form_class = SolicitudForm
+    form_class = SolicitudAdminForm
     template_name = 'solicitudes/solicitud_formulario.html'
     success_url = reverse_lazy('solicitudes:lista')
 
     def form_valid(self, form):
         solicitud = form.save(commit=False)
+        # Registrar fecha de aceptación si el estado cambia a ACEPTADA
         if solicitud.estado == Solicitud.ACEPTADA and not solicitud.fecha_aceptacion:
             solicitud.fecha_aceptacion = timezone.now()
+        # Limpiar fecha de aceptación si el estado cambia a otro diferente de ACEPTADA
+        elif solicitud.estado != Solicitud.ACEPTADA:
+            solicitud.fecha_aceptacion = None
         solicitud.save()
         messages.success(self.request, 'Solicitud actualizada correctamente.')
         return super().form_valid(form)

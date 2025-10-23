@@ -5,9 +5,109 @@
   <h2>{% if object %}Editar Solicitud{% else %}Nueva Solicitud{% endif %}</h2>
   <form method="post" novalidate id="form-solicitud">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a href="{% url 'solicitudes:lista' %}" class="btn btn-secondary">Cancelar</a>
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+
+    <div class="mb-3">
+      <label for="{{ form.rut.id_for_label }}" class="form-label">{{ form.rut.label }}</label>
+      {{ form.rut }}
+      {% if form.rut.errors %}
+        <div class="error-message">
+          {% for error in form.rut.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if form.rut.help_text %}
+        <small class="form-text text-muted">{{ form.rut.help_text }}</small>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.nombres.id_for_label }}" class="form-label">{{ form.nombres.label }}</label>
+      {{ form.nombres }}
+      {% if form.nombres.errors %}
+        <div class="error-message">
+          {% for error in form.nombres.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.apellidos.id_for_label }}" class="form-label">{{ form.apellidos.label }}</label>
+      {{ form.apellidos }}
+      {% if form.apellidos.errors %}
+        <div class="error-message">
+          {% for error in form.apellidos.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.direccion.id_for_label }}" class="form-label">{{ form.direccion.label }}</label>
+      {{ form.direccion }}
+      {% if form.direccion.errors %}
+        <div class="error-message">
+          {% for error in form.direccion.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.telefono.id_for_label }}" class="form-label">{{ form.telefono.label }}</label>
+      {{ form.telefono }}
+      {% if form.telefono.errors %}
+        <div class="error-message">
+          {% for error in form.telefono.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if form.telefono.help_text %}
+        <small class="form-text text-muted">{{ form.telefono.help_text }}</small>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.comuna.id_for_label }}" class="form-label">{{ form.comuna.label }}</label>
+      {{ form.comuna }}
+      {% if form.comuna.errors %}
+        <div class="error-message">
+          {% for error in form.comuna.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if form.estado %}
+    <div class="mb-3">
+      <label for="{{ form.estado.id_for_label }}" class="form-label">{{ form.estado.label }}</label>
+      {{ form.estado }}
+      {% if form.estado.errors %}
+        <div class="error-message">
+          {% for error in form.estado.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{% url 'solicitudes:lista' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
   </form>
 </div>
 <script src="{% static 'solicitudes/js/validaciones.js' %}"></script>
